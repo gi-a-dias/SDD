@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livraria Física & Digital</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #64748b;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .badge-tag {
+            background: #dbeafe;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: #ffffff;
+        }
+        .btn-secondary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #ffffff;
+        }
+        .btn-success:hover {
+            opacity: 0.9;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .sample-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .sample-chip {
+            background: #f1f5f9;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px dashed var(--border);
+        }
+
+        .sample-chip:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .book-item {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .book-item h4 {
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .book-author {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .book-info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .book-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .book-stock {
+            font-weight: 600;
+        }
+
+        .stock-critical {
+            color: var(--danger);
+        }
+
+        .stock-ok {
+            color: var(--success);
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .result-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        .alert-banner {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .rating-stars {
+            color: #eab308;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .orders-table th {
+            background: #f1f5f9;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-ready {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .status-delivered {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .qr-display {
+            display: inline-block;
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 18px;
+            top: 16px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .comment-list {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .comment-card {
+            background: #f8fafc;
+            border-left: 3px solid var(--primary);
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>📖 Livraria Física & Digital</h1>
+        <p>Catálogo, leitura de código de barras, compra com retirada e conferência de QR Code</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- US02: Leitura de Código de Barras -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">🔍 Leitura de Código de Barras</h2>
+                <span class="badge-tag">US02</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+                Digite ou selecione um código de barras de livro físico para obter detalhes instantaneamente:
+            </p>
+            <div class="sample-chips">
+                <span class="sample-chip" onclick="selecionarCodigo('7891234567890')">Dom Casmurro (7891234567890)</span>
+                <span class="sample-chip" onclick="selecionarCodigo('7891234567891')">O Hobbit (7891234567891)</span>
+                <span class="sample-chip" onclick="selecionarCodigo('7891234567892')">1984 (7891234567892)</span>
+            </div>
+            <div class="input-group">
+                <input type="text" id="inputCodigoBarras" placeholder="Ex: 7891234567890" />
+                <button class="btn-primary" onclick="buscarPorCodigo()">Buscar</button>
+            </div>
+            <div id="resultadoBuscaCodigo"></div>
+        </div>
+
+        <!-- US01: Consultar Avaliações -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">⭐ Consultar Avaliações</h2>
+                <span class="badge-tag">US01</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+                Consulte as notas e opiniões de outros leitores sobre qualquer título:
+            </p>
+            <div class="input-group">
+                <input type="text" id="inputTituloAvaliacao" placeholder="Ex: Dom Casmurro" />
+                <button class="btn-secondary" onclick="buscarAvaliacoes()">Ver Avaliações</button>
+            </div>
+            <div id="resultadoAvaliacoes"></div>
+        </div>
+    </div>
+
+    <!-- Catálogo de Livros e Alertas de Estoque (MVP 2) -->
+    <div class="card" style="margin-bottom: 32px;">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">📚 Catálogo de Livros & Controle de Estoque</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+                    Livros disponíveis na loja física e digital com monitoramento de estoque crítico (MVP 2).
+                </p>
+            </div>
+            <span class="badge-tag">MVP 2</span>
+        </div>
+        <div class="catalog-grid" id="catalogoGrid">
+            <!-- Preenchido via JavaScript -->
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- MVP 1: Compra e Retirada na Loja Física -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">🛒 Compra para Retirada na Loja</h2>
+                <span class="badge-tag">MVP 1</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+                Finalize a compra com retirada imediata na loja e receba o QR Code do pedido:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="text" id="pedidoCliente" placeholder="Nome do cliente (Ex: Gio)" />
+                <select id="pedidoLivro">
+                    <option value="">Selecione um livro...</option>
+                </select>
+                <button class="btn-success" onclick="realizarCompra()">Comprar para Retirada</button>
+            </div>
+            <div id="resultadoCompra"></div>
+        </div>
+
+        <!-- MVP 3: Conferência de QR Code na Loja -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📲 Balcão: Conferência de QR Code</h2>
+                <span class="badge-tag">MVP 3</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+                Atendente: leia ou informe o código QR para validar a entrega ao cliente:
+            </p>
+            <div class="input-group">
+                <input type="text" id="inputQrCode" placeholder="Ex: QR_PEDIDO_101" />
+                <button class="btn-primary" onclick="validarQrCode()">Conferir & Entregar</button>
+            </div>
+            <div id="resultadoConferencia"></div>
+        </div>
+    </div>
+
+    <!-- Tabela de Pedidos Realizados -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">📦 Pedidos Registrados no Sistema</h2>
+            <button class="btn-secondary btn-sm" onclick="carregarPedidos()">Atualizar Lista</button>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Cliente</th>
+                        <th>Livro</th>
+                        <th>QR Code</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaPedidosBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                            Nenhum pedido registrado ainda.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Avaliações -->
+<div id="modalAvaliacoes" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="fecharModal()">&times;</span>
+        <h3 id="modalTitulo" style="margin-bottom: 8px;"></h3>
+        <div id="modalNota" class="rating-stars" style="margin-bottom: 12px;"></div>
+        <h4 style="font-size: 0.95rem; color: var(--text-muted);">Comentários dos Clientes:</h4>
+        <div id="modalComentarios" class="comment-list"></div>
+    </div>
+</div>
+
+<script>
+    // Carrega catálogo e pedidos ao iniciar
+    document.addEventListener("DOMContentLoaded", () => {
+        carregarCatalogo();
+        carregarPedidos();
+    });
+
+    function selecionarCodigo(cod) {
+        document.getElementById("inputCodigoBarras").value = cod;
+        buscarPorCodigo();
+    }
+
+    async function carregarCatalogo() {
+        try {
+            const resp = await fetch("/api/livros");
+            const livros = await resp.json();
+            
+            const grid = document.getElementById("catalogoGrid");
+            const select = document.getElementById("pedidoLivro");
+            grid.innerHTML = "";
+            select.innerHTML = '<option value="">Selecione um livro...</option>';
+
+            for (const livro of livros) {
+                // Checa alerta de estoque (MVP 2)
+                const alertaResp = await fetch(`/api/estoque/alerta?livro=${encodeURIComponent(livro.titulo)}&qtde=${livro.estoque}`);
+                const alertaData = await alertaResp.json();
+
+                const isCritico = alertaData.critico;
+                const stockClass = isCritico ? 'stock-critical' : 'stock-ok';
+                const stockText = isCritico ? `${livro.estoque} un. (Estoque Crítico!)` : `${livro.estoque} un.`;
+
+                // Adiciona opção ao select
+                const opt = document.createElement("option");
+                opt.value = livro.titulo;
+                opt.textContent = `${livro.titulo} (R$ ${livro.preco.toFixed(2)})`;
+                select.appendChild(opt);
+
+                // Card do livro
+                const card = document.createElement("div");
+                card.className = "book-item";
+                card.innerHTML = `
+                    <div>
+                        <h4>${livro.titulo}</h4>
+                        <p class="book-author">Por ${livro.autor}</p>
+                        <div class="book-info-row">
+                            <span class="book-price">R$ ${livro.preco.toFixed(2)}</span>
+                            <span class="book-stock ${stockClass}">Estoque: ${stockText}</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">
+                            Cód: <code>${livro.codigo_barras}</code>
+                        </div>
+                        ${isCritico ? `<div class="alert-banner alert-warning" style="margin-top: 4px; margin-bottom: 8px;">⚠️ ${alertaData.alerta}</div>` : ''}
+                    </div>
+                    <div class="book-actions">
+                        <button class="btn-secondary btn-sm" onclick="abrirAvaliacoes('${livro.titulo}')">Avaliações</button>
+                        <button class="btn-primary btn-sm" onclick="selecionarParaCompra('${livro.titulo}')">Comprar</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        } catch (err) {
+            console.error("Erro ao carregar catálogo:", err);
+        }
+    }
+
+    async function buscarPorCodigo() {
+        const codigo = document.getElementById("inputCodigoBarras").value.trim();
+        const container = document.getElementById("resultadoBuscaCodigo");
+        if (!codigo) {
+            container.innerHTML = '<div class="alert-banner alert-warning">Por favor, informe um código de barras.</div>';
+            return;
+        }
+
+        try {
+            const resp = await fetch(`/api/livros/codigo/${encodeURIComponent(codigo)}`);
+            if (resp.ok) {
+                const livro = await resp.json();
+                container.innerHTML = `
+                    <div class="result-box">
+                        <h4 style="color: var(--primary); margin-bottom: 4px;">${livro.titulo}</h4>
+                        <p><strong>Autor:</strong> ${livro.autor} | <strong>Categoria:</strong> ${livro.categoria || 'Geral'}</p>
+                        <p><strong>Preço:</strong> R$ ${livro.preco.toFixed(2)} | <strong>Estoque:</strong> ${livro.estoque} un.</p>
+                        <div style="margin-top: 10px; display: flex; gap: 8px;">
+                            <button class="btn-secondary btn-sm" onclick="abrirAvaliacoes('${livro.titulo}')">Ver Avaliações</button>
+                            <button class="btn-success btn-sm" onclick="selecionarParaCompra('${livro.titulo}')">Comprar para Retirada</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '<div class="alert-banner alert-danger">Livro não encontrado para este código de barras.</div>';
+            }
+        } catch (err) {
+            container.innerHTML = `<div class="alert-banner alert-danger">Erro na busca: ${err.message}</div>`;
+        }
+    }
+
+    async function buscarAvaliacoes() {
+        const titulo = document.getElementById("inputTituloAvaliacao").value.trim();
+        const container = document.getElementById("resultadoAvaliacoes");
+        if (!titulo) {
+            container.innerHTML = '<div class="alert-banner alert-warning">Informe o título do livro.</div>';
+            return;
+        }
+        abrirAvaliacoes(titulo);
+    }
+
+    async function abrirAvaliacoes(titulo) {
+        try {
+            const resp = await fetch(`/api/avaliacoes?titulo=${encodeURIComponent(titulo)}`);
+            const data = await resp.json();
+
+            document.getElementById("modalTitulo").textContent = `Avaliações: ${data.titulo}`;
+            document.getElementById("modalNota").textContent = `★ ${data.nota} / 5.0`;
+
+            const listaComentarios = document.getElementById("modalComentarios");
+            listaComentarios.innerHTML = "";
+
+            if (data.comentarios && data.comentarios.length > 0) {
+                data.comentarios.forEach(c => {
+                    const el = document.createElement("div");
+                    el.className = "comment-card";
+                    el.textContent = `"${c}"`;
+                    listaComentarios.appendChild(el);
+                });
+            } else {
+                listaComentarios.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma avaliação cadastrada para este título.</p>';
+            }
+
+            document.getElementById("modalAvaliacoes").style.display = "flex";
+        } catch (err) {
+            alert("Erro ao buscar avaliações: " + err.message);
+        }
+    }
+
+    function fecharModal() {
+        document.getElementById("modalAvaliacoes").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("modalAvaliacoes");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    function selecionarParaCompra(titulo) {
+        document.getElementById("pedidoLivro").value = titulo;
+        window.scrollTo({ top: document.getElementById("pedidoLivro").offsetTop - 100, behavior: 'smooth' });
+    }
+
+    async function realizarCompra() {
+        const cliente = document.getElementById("pedidoCliente").value.trim();
+        const livro = document.getElementById("pedidoLivro").value;
+        const container = document.getElementById("resultadoCompra");
+
+        if (!cliente || !livro) {
+            container.innerHTML = '<div class="alert-banner alert-warning">Preencha o nome do cliente e selecione um livro.</div>';
+            return;
+        }
+
+        try {
+            const resp = await fetch("/api/pedidos", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ cliente, livro })
+            });
+
+            if (resp.ok) {
+                const pedido = await resp.json();
+                container.innerHTML = `
+                    <div class="result-box" style="border-left: 4px solid var(--success);">
+                        <h4 style="color: var(--success); margin-bottom: 6px;">Pedido Gerado com Sucesso!</h4>
+                        <p><strong>Pedido:</strong> ${pedido.id_pedido} | <strong>Cliente:</strong> ${pedido.cliente}</p>
+                        <p><strong>Livro:</strong> ${pedido.livro}</p>
+                        <p><strong>Status:</strong> <span class="status-pill status-ready">${pedido.status}</span></p>
+                        <p style="margin-top: 8px;"><strong>Código QR para Retirada:</strong> <span class="qr-display">${pedido.qr_code}</span></p>
+                    </div>
+                `;
+                carregarPedidos();
+            } else {
+                const err = await resp.json();
+                container.innerHTML = `<div class="alert-banner alert-danger">${err.erro}</div>`;
+            }
+        } catch (err) {
+            container.innerHTML = `<div class="alert-banner alert-danger">Erro na requisição: ${err.message}</div>`;
+        }
+    }
+
+    async function validarQrCode() {
+        const qrCode = document.getElementById("inputQrCode").value.trim();
+        const container = document.getElementById("resultadoConferencia");
+
+        if (!qrCode) {
+            container.innerHTML = '<div class="alert-banner alert-warning">Digite ou selecione o código QR.</div>';
+            return;
+        }
+
+        try {
+            const resp = await fetch("/api/pedidos/validar-qr", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ qr_code: qrCode })
+            });
+
+            const data = await resp.json();
+
+            if (data.sucesso) {
+                container.innerHTML = `
+                    <div class="alert-banner alert-success">
+                        ✅ <strong>Sucesso:</strong> ${data.mensagem} (Status: Entregue)
+                    </div>
+                `;
+                carregarPedidos();
+            } else {
+                container.innerHTML = `
+                    <div class="alert-banner alert-danger">
+                        ❌ <strong>Falha na conferência:</strong> ${data.mensagem}
+                    </div>
+                `;
+            }
+        } catch (err) {
+            container.innerHTML = `<div class="alert-banner alert-danger">Erro: ${err.message}</div>`;
+        }
+    }
+
+    async function carregarPedidos() {
+        try {
+            const resp = await fetch("/api/pedidos");
+            const pedidos = await resp.json();
+            const tbody = document.getElementById("tabelaPedidosBody");
+
+            if (pedidos.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">
+                            Nenhum pedido cadastrado no momento.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = "";
+            pedidos.forEach(p => {
+                const tr = document.createElement("tr");
+                const isReady = p.status === "Pronto para Retirada";
+                const statusClass = isReady ? "status-ready" : "status-delivered";
+
+                tr.innerHTML = `
+                    <td><strong>${p.id_pedido}</strong></td>
+                    <td>${p.cliente}</td>
+                    <td>${p.livro}</td>
+                    <td><span class="qr-display">${p.qr_code}</span></td>
+                    <td><span class="status-pill ${statusClass}">${p.status}</span></td>
+                    <td>
+                        ${isReady ? `<button class="btn-primary btn-sm" onclick="prepararConferencia('${p.qr_code}')">Conferir QR</button>` : `<span style="color: var(--text-muted); font-size: 0.85rem;">Concluído</span>`}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            console.error("Erro ao carregar pedidos:", err);
+        }
+    }
+
+    function prepararConferencia(qr) {
+        document.getElementById("inputQrCode").value = qr;
+        validarQrCode();
+    }
+</script>
+
+</body>
+</html>
